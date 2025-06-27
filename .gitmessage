@@ -1,0 +1,22 @@
+# TYPE(scope?): short summary (max 50 chars, imperative, no period)
+#
+# BODY (wrap at ~72 chars):
+# - What you did
+# - Why you did it
+# - Any edge-case or internal note
+#
+# Types:
+# - ac, tle, wa, mle, ce (if it get submitted but no change)
+# - prog (if it didn't finished and didn't get submitted yet)
+# - fix (fixing certain code in solution)
+# - note (adding readme for more context)
+# - refactor (code improvement)
+# - etc (TBA)
+# 
+# Example: 
+# ac: solve problem X using algorithm Y 
+# 
+# Implemented a solution for problem X using algorithm Y.
+# 
+# Main idea was to optimize the time complexity by using a priority queue.
+
