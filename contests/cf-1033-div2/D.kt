@@ -1,9 +1,5 @@
 import java.util.StringTokenizer
 import java.io.PrintWriter
-
-import kotlin.math.min
-import java.util.*
-
 @JvmField val INPUT = System.`in`
 @JvmField val OUTPUT = System.out
 @JvmField val _reader = INPUT.bufferedReader()
@@ -28,64 +24,58 @@ fun readLongArray(n: Int) = LongArray(n) { read().toLong() }
 @JvmField val _writer = PrintWriter(OUTPUT, false)
 inline fun output(block: PrintWriter.() -> Unit) { _writer.apply(block).flush() }
 
-fun main(){
-    var t: Int = readInt()
+val mod: Long = 1000_000_007;
+val listOfInv = MutableList<Long>(100_001) {index -> index.toLong()}
+val listOfFact = MutableList<Long>(100_001) {index -> index.toLong()}
 
-    while(t-- > 0){
-        solve()
-    }
+
+fun main(){
+var t: Int = readInt()
+
+
+listOfFact[0] = 1L
+listOfInv[0] = 1L
+for (i in 1..100_000) {
+    listOfFact[i] *= listOfFact[i-1]
+    listOfFact[i] %= mod
+
+    listOfInv[i] = inv(listOfFact[i])
+}
+while(t-- > 0) solve()
 }
 
 fun solve(){
-    var n: Long = readLong()
-    var m: Long = readLong()
+    var a: Long = readLong()
+    var b: Long = readLong()
+    var k: Long = readLong()
 
-    if (m < n || m > n * (n + 1L) / 2L) {
-        println(-1)
-        return
+    var row: Long = ((a - 1L) * k) % mod
+    row++
+
+    var col: Long = k * (b - 1L)
+    col %= mod
+
+    var st = (row-a) + 1L
+
+    for(i in st..row){
+        col *= i
+        col %= mod
     }
 
-    if (n == m) {
-        println(1)
-        for(i in 1L..n-1L){
-            println("${i} ${i+1L}")
-        }
-        return
-    }
-    
-    var v = ArrayList<Long>()
-    var vis = MutableList<Boolean>(n.toInt() + 1) {index -> false}
-    var maxx: Long
-    var cum: Long = 0
-    var cur: Long
-    var q: Queue<Long> = LinkedList()
-    for (i in n downTo 1L){
-        maxx = m - cum - (i - 1L)
-        cur = min(maxx, i)
-        cum += cur
-        v.add(cur)
-        vis[cur.toInt()] = true
-        if (!vis[i.toInt()]) q.add(i)
-    }
+    col *= listOfInv[a.toInt()]
+    col %= mod
 
-    var front = v[0]
-    println(front)
-    for (i in 1..n.toInt() - 1){
-        output {
-            print(front)
-            print(" ")
-    
-            if (v[i-1] == v[i]){
-                front = q.peek()
-                q.remove()
-            } else front = v[i]
-    
-            print(front)
-    
-            println()
-        }
-    }
+    col++
+    col %= mod
 
+    if (col < 0) col += mod
+
+    output{
+        println("${row} ${col}")
+    }
 }
 
-// 4 2 2 1
+fun inv(a: Long): Long{
+    return if (a <= 1L) a else mod - (mod/a) * inv(mod % a) % mod
+}
+// 299929959 603196135
