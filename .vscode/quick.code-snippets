@@ -1,0 +1,16 @@
+{
+    "C++ competitive template": {
+        "scope": "cpp",
+        "prefix": "snip",
+        "body": [
+            "#include <bits/stdc++.h>",
+            "using namespace std;",
+            "",
+            "signed main() {",
+            "    $0",
+            "    return 0;",
+            "}"
+        ],
+        "description": "C++ competitive programming template"
+    }
+}
